@@ -1,8 +1,8 @@
 # termdebug-easymaps
-Wrapper for Vim TermDebug plugin which set temporary key maps for source buffers during debug that makes debug procedure in Vim fast and easy.
+Wrapper for Vim TermDebug plugin which sets temporary key maps for source buffers during debug that makes debug procedure in Vim fast and easy.
 
 ## Introduction
-Before use this plugin I recommend to replace native Vim TermDebug plugin with [patched TermDebug][patched one].
+Before use this plugin I recommend to replace native Vim TermDebug plugin with [patched TermDebug][].
 
 This plugin is wrapper for Vim TermDebug plugin. It makes temporary maps for opened source code buffers and makes them nomodifiable if it is desirable during debug process. After debug has finished plugin restore maps that was before debug. It works in two modes. In first plugin set maps after debugger has been opened before actual debugging start. In second after debug process have been started. Switching between modes can be done by setting `g:termdebug_easymaps_treatopened` and `g:termdebug_easymaps_treatonrun` configure variables.
 
