@@ -1,7 +1,7 @@
 " ============================================================================
 " File:        termdebug-easymaps.vim
 " Date:	       March 6, 2019
-" Description: Set maps for source buffers during debug
+" Description: Set temporary maps for source buffers during debug
 " Author:      Kirill Bugaev <kirill.bugaev87@gmail.com>
 " Licence:     Vim licence
 " Website:     https://github.com/Kirill-Bugaev/vim-termdebug-easymaps
