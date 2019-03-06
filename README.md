@@ -1,5 +1,5 @@
 # termdebug-easymaps
-Wrapper for Vim TermDebug plugin which sets temporary key maps for source buffers during debug that makes debug procedure in Vim fast and easy.
+Wrapper for Vim TermDebug plugin which sets temporary key maps for source code buffers during debug that makes debug procedure in Vim fast and easy.
 
 ## Introduction
 Before use this plugin I recommend to replace native Vim TermDebug plugin with [patched TermDebug][].
