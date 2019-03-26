@@ -645,6 +645,12 @@ endfunc
 func s:CommOutput(out, msg)
 	let msgs = split(a:msg, "\r")
 
+	" Define sources part flag just in case all source files have been
+	" requested
+	if s:commflags['all_sources']
+		let sources_part = 0
+	endif
+
  	for msg in msgs
 		" remove prefixed NL
 		if msg[0] ==# "\n"
@@ -676,24 +682,48 @@ func s:CommOutput(out, msg)
 			endif
 			" If request of all source files has been done
 			if s:commflags['all_sources']
+				" Set flag means that further will received first part of
+				" source files
+				if msg =~# 'Source files for which symbols have been read in'
+					let sources_part = 1
+				" Set flag means that further will received second part of
+				" source files
+				elseif msg =~# 'Source files for which symbols will be read in on demand'
+					let sources_part = 2
+				" If second part of source files is empty reset sources
+				" request flag
+				elseif  msg[0:4] == '~"\n"' && sources_part == 2
+					let s:commflags['all_sources'] = 0
+					break
 				" If paths of source files was received
-				if msg[0:2] == '~"/'
+				elseif msg[0:2] == '~"/'
 					" Extract files paths (This is Windows incompatible. TODO) 
-					let s:source_list = []
+					" If received first part of source files create source
+					" list
+					if sources_part == 1
+						let s:source_list = []
+					endif
 					let i = 2
-					while msg[i:i+4] !=# '\n\n"' && i < len(msg)
+					while msg[i:i+1] !=# '\n' && i < len(msg)
 						let flpath = ''
-						while msg[i:i+1] != ', ' && msg[i:i+4] !=# '\n\n"'
+						while msg[i:i+1] != ', ' && msg[i:i+1] !=# '\n'
 							let flpath .= msg[i]
 							let i += 1
 						endwhile
-						let s:source_list += [flpath]
+						" Add file path to list if it hasn't been added before
+						if match(s:source_list, flpath) == -1
+							let s:source_list += [flpath]
+						endif
 						if msg[i:i+1] == ', '
 							let i += 2
 						endif
 					endwhile
-					let s:commflags['all_sources'] = 0
-					break
+					" If received second part of source files reset sources
+					" request flag
+					if sources_part == 2
+						let s:commflags['all_sources'] = 0
+						break
+					endif
 				elseif msg =~# 'No symbol table is loaded'
 					let s:source_list = []
 					let s:commflags['all_sources'] = 0
