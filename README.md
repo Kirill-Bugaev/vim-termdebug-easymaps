@@ -61,14 +61,14 @@ let g:termdebug_easymaps_focussource = 1
 (boolean, default `1`)
 
 ### termdebug_easymaps_treatopened
-If `1` plugin will set maps and nomodifiable state (if desirable) in already opened source code buffers when debugger starts and later opened source code buffers which belongs to debugged program.
+If `1` plugin will set maps and nomodifiable state (if desirable) in already opened source code buffers (when debugger starts) and later manually opened source code buffers which belongs to debugged program. If big project (like Linux kernel) is debugged it may slow down Vim during debugger opening. In this case better to use `termdebug_easymaps_treatonrun` option (see below).
 ```vim
 let g:termdebug_easymaps_treatopened = 1
 ```
 (boolean, default `1`)
 
 ### termdebug_easymaps_treatonrun
-If `1` plugin will set maps and nomodifiable state (is desirable) only for source code buffers which would opened during debug process (eg. when breakpoint is reached). If `1` it abolishes behaviour defined by `g:termdebug_easymaps_treatopened` option.
+If `1` plugin will set maps and nomodifiable state (if desirable) only for source code buffers which would opened during debug process (eg. when breakpoint is reached). If `1` it abolishes behaviour defined by `g:termdebug_easymaps_treatopened` option.
 ```vim
 let g:termdebug_easymaps_treatonrun = 1
 ```
